@@ -1,0 +1,7 @@
+# 测试残留
+*.tmp
+*.log
+
+# OS
+Thumbs.db
+.DS_Store

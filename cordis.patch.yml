@@ -1,0 +1,4 @@
+# dsh-ws-files bundle patch：挂载 host 侧插件行（该行同时触发 dsh.client 扫描）
+- insert:
+    - id: ws-files
+      name: dsh-ws-files
