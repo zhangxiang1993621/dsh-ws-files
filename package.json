@@ -1,6 +1,6 @@
 {
   "name": "dsh-ws-files",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "工作空间文件浏览器：在 dsh web 界面直接查看工作空间目录与文件内容",
   "private": true,
   "type": "module",
@@ -24,7 +24,8 @@
     "client": {
       "platform": "web",
       "inject": [
-        "slots"
+        "slots",
+        "layout"
       ]
     }
   },
