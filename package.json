@@ -1,7 +1,7 @@
 {
   "name": "dsh-ws-files",
   "version": "0.1.4",
-  "description": "工作空间文件浏览器：在 dsh web 界面直接查看工作空间目录与文件内容",
+  "description": "工作空间文件浏览器：树形目录浏览、搜索、在线编辑，注册进布局左/右区域，文件在对话/轨迹同级标签页打开",
   "private": true,
   "type": "module",
   "main": "lib/index.js",

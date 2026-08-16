@@ -1,12 +1,12 @@
 # dsh-ws-files — 工作空间文件浏览器（DeepSeek Harness 插件）
 
-在 DeepSeek Harness 的 Web 前端直接查看/编辑**工作空间**的文件：树形目录浏览、文件名搜索、系统默认程序打开、在线编辑保存（写前确认）。点击文件会在「对话 / 轨迹」同级的标签页中打开内容。
+在 DeepSeek Harness 的 Web 前端直接查看/编辑**工作空间**的文件：树形目录浏览、文件名搜索、系统默认程序打开、在线编辑保存（写前确认）。面板注册进布局的左/右区域（由 `dsh-layout` 渲染），点击文件会在「对话 / 轨迹」同级的标签页中打开内容。
 
 ![plugin](https://img.shields.io/badge/dsh-plugin-blue) ![license](https://img.shields.io/badge/license-MIT-green)
 
 ## 功能
 
-- 侧栏底部「📁 文件」按钮 → 右侧**停靠**文件面板（`details` 列，与内容并列不悬浮，分割线可拖动调宽）
+- **布局区域 pane**：注册进 `layout.left` / `layout.right`（id `ws-files`），可被 `dsh-layout` 分配到左侧或右侧区域；随当前会话工作区自动切换
 - **树形目录**：工作区根 → 逐层展开/折叠（懒加载），文件夹加粗、显示大小
 - **搜索**：按文件名（不区分大小写）搜索，命中可直达
 - **打开**：用系统默认程序打开文件/目录
@@ -23,7 +23,7 @@
 | 半 | 文件 | 作用 |
 |---|---|---|
 | host | `lib/index.js` | Cordis 插件行：`inject ['webServer','fs','workspaceRegistry']`，注册 `/ws-files` JSON 路由 |
-| client | `lib/client.js` | 浏览器 bundle（`__ModuleLoader__` 协议，纯手工编写，仅 external 平台模块）：`sidebar.footer.action` 入口 + `details` 右侧停靠面板 + `conversation.view` 文件标签页 |
+| client | `lib/client.js` | 浏览器 bundle（`__ModuleLoader__` 协议，纯手工编写，仅 external 平台模块）：`layout.left` / `layout.right` 面板 + `conversation.view` 文件标签页 |
 | 声明 | `package.json` | `dsh.bundle.patch`（挂载 host 行）+ `dsh.client`（客户端声明）+ `exports["./client"]` |
 
 ## API（host 半）
@@ -58,5 +58,4 @@ node --import tsx/esm apps/cli/src/bin.ts plugin --profile web add link:/绝对/
 ## 开发备注
 
 - 客户端 bundle 无构建链：手工维护 `__ModuleLoader__` 协议格式，仅 external 10 个平台模块（react / react-dom / @deepseek-ai/cordis / client-ui-* 等），其余代码全部内联
-- 槽位：`sidebar.footer.action`（入口按钮，list 槽，id=`ws-files`）+ `details`（右侧停靠面板，single 槽，`priority:-1` 覆盖内置工具详情）+ `conversation.view`（文件标签页，list 槽，id=`ws-files-<fileId>`，动态注册/注销）
-- 注意：占用 `details` 列意味着内置的「工具调用详情」面板被文件面板替换（如需两者共存可再议）
+- 槽位：`layout.left` / `layout.right`（布局区域 pane，list 槽，id=`ws-files`，由 `dsh-layout` 声明渲染）+ `conversation.view`（文件标签页，list 槽，id=`ws-files-<fileId>`，动态注册/注销）
